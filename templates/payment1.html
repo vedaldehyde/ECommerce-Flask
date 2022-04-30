@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form action="/purchase" method="POST">
+        <script
+          src="https://checkout.stripe.com/checkout.js"
+          class="stripe-button"
+          data-key="pk_test_51IXPhESDcO8lL4YQo9a4P699rQrEV6X5CGQZJpqFj1gxEeg8BVPS6GypUkVaJNkCHRgiKuJ3XLBFc598Mc9E1vAJ009wTZimbs"
+          data-name="Custom t-shirt"
+          data-description="Your custom designed t-shirt"
+          data-amount="{{ORDER_AMOUNT}}"
+          data-currency="inr">
+        </script>
+      </form>
+</body>
+</html>

@@ -1,0 +1,169 @@
+
+<!doctype html>
+<html class="no-js" lang="">
+   <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+   <head>
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <title>Dashboard Page</title>
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link rel="stylesheet" href="static/assets/css/normalize.css">
+      <link rel="stylesheet" href="static/assets/css/bootstrap.min.css">
+      <link rel="stylesheet" href="static/assets/css/font-awesome.min.css">
+      <link rel="stylesheet" href="static/assets/css/themify-icons.css">
+      <link rel="stylesheet" href="static/assets/css/pe-icon-7-filled.css">
+      <link rel="stylesheet" href="static/assets/css/flag-icon.min.css">
+      <link rel="stylesheet" href="static/assets/css/cs-skin-elastic.css">
+      <link rel="stylesheet" href="static/assets/css/style.css">
+
+      <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<!-- Popper JS -->
+
+
+      <!-- JavaScript Bundle with Popper -->
+      
+   </head>
+   <body>
+      <aside id="left-panel" class="left-panel">
+         <nav class="navbar navbar-expand-sm navbar-default">
+            <div id="main-menu" class="main-menu collapse navbar-collapse">
+               <ul class="nav navbar-nav">
+                  <li class="menu-title">Menu</li>
+                  <li class="menu-item-has-children dropdown">
+                     <a href="/category" > Categories</a>
+                  </li>
+                  <li class="menu-item-has-children dropdown">
+                     <a href="/product" >Products</a>
+                  </li>
+				      <li class="menu-item-has-children dropdown">
+                     <a href="#" > Users</a>
+                  </li>
+                  <li class="menu-item-has-children dropdown">
+                     <a href="#" >Orders</a>
+                  </li>
+                  <li class="menu-item-has-children dropdown">
+                     <a href="#" >Contact Us</a>
+                  </li>
+               </ul>
+            </div>
+         </nav>
+      </aside>
+      <div id="right-panel" class="right-panel">
+         <header id="header" class="header">
+            <div class="top-left">
+               <div class="navbar-header">
+                  <a class="navbar-brand" href="index.html"><img src="images/logo.png" alt="Logo"></a>
+                  <a class="navbar-brand hidden" href="index.html"><img src="images/logo2.png" alt="Logo"></a>
+                  <a id="menuToggle" class="menutoggle"><i class="fa fa-bars"></i></a>
+               </div>
+            </div>
+            <div class="top-right">
+               <div class="header-menu">
+                  <div class="user-area dropdown float-right">
+                     <a href="#" class="dropdown-toggle active" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Welcome Admin</a>
+                     <div class="user-menu dropdown-menu">
+                        <a class="nav-link" href="#"><i class="fa fa-power-off"></i>Logout</a>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </header>
+         <div class="content pb-0">
+            <div class="orders">
+               <div class="row">
+                  <div class="col-xl-12">
+                     <div class="card">
+                        <div class="card-body">
+                           <h3>Products</h3>
+                           <h5 class="box-title"><a href="/addprod" class="btn btn-success">Add Products</a></h5>
+                        </div>
+                        <div class="card-body--">
+                           <div class="table-stats order-table ov-h">
+                              <table class="table table-striped">
+                                    <tr>
+                                       <th><b>ID</b></th>
+                                       <th><b>Name</b></th>
+                                       <th><b>Price</b></th>                                   
+                                       <th><b>Category</b></th>
+                                       <th><b>Brand</b></th>
+                                       <th><b>Quantity</b></th>
+                                       <th><b>Image</b></th>
+                                       <th><b>Status</b></th>
+                                       <th><b>Edit</b></th>
+                                       <th><b>Delete</b></th>
+                                    </tr>
+                                    {% for row in prod %}
+                                    <tr>
+                                       <td>{{row.0}}<input type="hidden" name="id" value="{{row.0}}"> </td> 
+                                       <td>{{row.1}}</td> 
+                                       <td>{{row.2}}</td>  
+                                       <td>{{row.3}}</td>  
+                                       <td>{{row.4}}</td>  
+                                       <td>{{row.5}}</td>  
+                                       <td><img src="{{row.6}}"></td>  
+                                       <td>Active</td>    
+                                       <td><a href="/updateprod/{{row.0}}" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal{{row.0}}">Edit</a></td>
+                                       <td><a href="/deleteprod/{{row.0}}" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete ?')">Delete</a></td>                                                                                                             
+                                    </tr>
+                                    <div id="modaledit{{row.0}}" class="modal fade" role="dialog"></div>
+                                    <div class="modal fade" id="exampleModal{{row.0}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                       <div class="modal-dialog">
+                                         <div class="modal-content">
+                                           <div class="modal-header">
+                                             <h4 class="modal-title" id="exampleModalLabel"><strong>Edit Products</strong></h4>                  
+                                           </div>
+                                           <div class="modal-body">
+                                             <form method="POST" action="{{url_for('updateprod')}}">
+                                                <div class="mb-3">
+                                                   <input type="hidden" name="id" value="{{row.0}}">
+                                                   <label class="col-form-label">Product Name:</label>
+                                                   <input type="text" class="form-control" value="{{row.1}}" name="proname">
+                                                </div>
+                                                <div class="mb-3">
+                                                  <label for="message-text" class="col-form-label">Product Price:</label>
+                                                  <input type="text" class="form-control" name="proprice" value="{{row.2}}">
+                                                </div>
+                                                <div class="mb-3">
+                                                   <label for="message-text" class="col-form-label">Category:</label>
+                                                   <input type="text" class="form-control" name="pcategory" value="{{row.3}}">
+                                                 </div>
+                                                 <div class="mb-3">
+                                                   <label for="message-text" class="col-form-label">Product Brand:</label>
+                                                   <input type="text" class="form-control" name="bname" value="{{row.4}}">
+                                                 </div>
+                                                 <div class="mb-3">
+                                                   <label for="message-text" class="col-form-label">Quantity:</label>
+                                                   <input type="text" class="form-control" name="qty" value="{{row.5}}">
+                                                 </div>
+                                                 <div class="mb-3">
+                                                   <label for="message-text" class="col-form-label">Product Image:</label>
+                                                   <input type="file" class="form-control" name="img" value="{{row.6}}">
+                                                 </div>
+                                                 <div class="mb-3" style="align-items: center;">
+                                                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                   <input type="submit" class="btn btn-primary" value="Save Changes">
+                                                 </div>
+                                              </form>
+                                           </div>
+                                         </div>
+                                       </div>
+                                     </div>                           
+                                    {% endfor %}  
+                              </table>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+		  </div>
+      </div>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+   </body>
+</html>
